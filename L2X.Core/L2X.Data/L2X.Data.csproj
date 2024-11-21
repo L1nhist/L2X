@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\L2X.Core\L2X.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="AutoMapper" />
+    <Using Include="L2X.Core.Models" />
+    <Using Include="L2X.Core.Utilities" />
+    <Using Include="L2X.Data.Entities" />
+    <Using Include="System.Collections" />
+    <Using Include="System.ComponentModel.DataAnnotations" />
+    <Using Include="System.Linq.Expressions" />
+  </ItemGroup>
+
+</Project>

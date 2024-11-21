@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Using Include="L2X.Core.Extensions" />
+    <Using Include="L2X.Core.Serialize" />
+    <Using Include="L2X.Core.Structures" />
+    <Using Include="L2X.Core.Utilities" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+    <Using Include="System.Linq.Expressions" />
+    <Using Include="System.Text" />
+    <Using Include="System.Text.Json" />
+    <Using Include="System.Text.Json.Serialization" />
+  </ItemGroup>
+
+</Project>
