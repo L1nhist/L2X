@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\L2X.Exchange.Core\L2X.Exchange.Core.csproj" />
+    <ProjectReference Include="..\L2X.MessageQueue\L2X.MessageQueue.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="L2X.Exchange.Enums" />
+    <Using Include="L2X.Exchange.Exceptions" />
+    <Using Include="L2X.Exchange.Models" />
+    <Using Include="L2X.MatchingEngine.Collections" />
+    <Using Include="L2X.MessageQueue.Models" />
+    <Using Include="L2X.MessageQueue.Models.Matching" />
+    <Using Include="System.Collections" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\L2X.Exchange.Core\L2X.Exchange.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="L2X.Exchange.Enums" />
+    <Using Include="L2X.Exchange.Matching.Collections" />
+    <Using Include="L2X.Exchange.Matching.Exceptions" />
+    <Using Include="L2X.Exchange.Matching.Models" />
+    <Using Include="L2X.Exchange.Models" />
+    <Using Include="System.Collections" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
