@@ -1,0 +1,9 @@
+﻿@model string
+@if (!string.IsNullOrEmpty(Model?.Trim()))
+{
+    @Html.Partial($"~/Views/Home/_{Model}.cshtml");
+}
+else
+{
+    @Html.Partial($"~/Views/Home/_dashboard.cshtml");
+}

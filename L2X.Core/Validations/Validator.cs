@@ -47,4 +47,12 @@ public class Validator<T> : IValidator<T>
 
         return _errors.Count == 0;
     }
+
+    public void CopyTo(Dictionary<string, string> errors)
+    {
+        foreach (var e in _errors)
+        {
+            errors.Add(e.Key, e.Value);
+        }
+    }
 }

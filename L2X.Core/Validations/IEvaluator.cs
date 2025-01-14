@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace L2X.Core.Validations;
+﻿namespace L2X.Core.Validations;
 
 public interface IEvaluator<TVal, TFld>
 {

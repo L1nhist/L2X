@@ -1,8 +1,8 @@
 ﻿namespace L2X.Exchange.Data.Entities;
 
 [Table("Order")]
-[Index("Code", IsUnique = true)]
-public class Order : Entity<Guid>, IMomentable, IRemovable
+[Index("OrderNo", IsUnique = true)]
+public class Order : Entity, IMarkable, IMomentable, IRemovable
 {
     /// <summary>
     /// Mã Uid độc lập để định danh cho thành viên đặt lệnh
@@ -12,7 +12,7 @@ public class Order : Entity<Guid>, IMomentable, IRemovable
     /// <summary>
     /// Mã Uid độc để dịnh danh cho kênh trao đổi tương ứng
     /// </summary>
-    public Guid SymbolId { get; set; }
+    public Guid MarketId { get; set; }
 
     /// <summary>
     /// Mã Uid độc để dịnh danh cho kênh trao đổi tương ứng
@@ -22,20 +22,19 @@ public class Order : Entity<Guid>, IMomentable, IRemovable
     /// <summary>
     /// Ký hiệu riêng của mỗi lệnh đặt
     /// </summary>
-    [Required]
+    /// </summary>
     public long OrderNo { get; set; }
 
+    /// <summary>
+    /// Is Market Name
+    /// </summary>
     [StringLength(30)]
-    public string? OwnerName { get; set; }
-
-    [StringLength(30)]
-    public string? SymbolName { get; set; }
+    public string? Symbol { get; set; }
 
     /// <summary>
     /// Loại lệnh, gồm: [buy] lệnh mua loại tiền tệ chính, [sell] lệnh bán loại tiền tệ chính
     /// </summary>
     /// <see cref="OrderSide"/>
-    [StringLength(20)]
     public bool Side { get; set; }
 
     /// <summary>
@@ -75,7 +74,7 @@ public class Order : Entity<Guid>, IMomentable, IRemovable
     public decimal? Amount { get; set; }
 
     /// <summary>
-    /// Khối lượng đã khớp lệnh
+    /// Tổng giá trị đặt lệnh (= Giá * Khối lượng) dùng cho lệnh Iceberg (không hiển thị)
     /// </summary>
     public decimal? Origin { get; set; }
 
@@ -99,7 +98,7 @@ public class Order : Entity<Guid>, IMomentable, IRemovable
     /// [waiting] chờ khớp, [mmp_canceled] hủy trong lệnh tạo thị trường
     /// </summary>
     /// <see cref="OrderState"/>
-    [StringLength(20)]
+    [StringLength(30)]
     public string? State { get; set; }
 
     /// <summary>
@@ -113,7 +112,12 @@ public class Order : Entity<Guid>, IMomentable, IRemovable
     public long? ModifiedAt { get; set; }
 
     /// <summary>
-    /// Ngày kết thúc (khi khớp hoàn toàn lệnh hoặc hủy lệnh thành công) dạng EpouchTimestamp (tính đến milliseconds)
+    /// Ngày kết thúc lệnh dạng EpouchTimestamp (tính đến milliseconds)
+    /// </summary>
+    public long? ExpiredAt { get; set; }
+
+    /// <summary>
+    /// Ngày kết thúc trên hệ thống (khi khớp hoàn toàn lệnh hoặc hủy lệnh thành công) dạng EpouchTimestamp (tính đến milliseconds)
     /// </summary>
     public long? FinishedAt { get; set; }
 
@@ -131,8 +135,8 @@ public class Order : Entity<Guid>, IMomentable, IRemovable
     /// <summary>
     /// Kênh trao đổi đặt lệnh
     /// </summary>
-    [ForeignKey(nameof(SymbolId))]
-    public Symbol? Symbol { get; set; }
+    [ForeignKey(nameof(MarketId))]
+    public Market? Market { get; set; }
 
     ///// <summary>
     ///// Hạn mức phí 
@@ -143,10 +147,10 @@ public class Order : Entity<Guid>, IMomentable, IRemovable
     ///// <summary>
     ///// Danh sách khớp lệnh
     ///// </summary>
-    //public ICollection<Matcher>? MakerMatchers { get; set; }
+    public ICollection<Match>? MakerMatchers { get; set; }
 
     ///// <summary>
     ///// Danh sách khớp lệnh
     ///// </summary>
-    //public ICollection<Matcher>? TakerMatchers { get; set; }
+    public ICollection<Match>? TakerMatchers { get; set; }
 }

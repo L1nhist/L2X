@@ -47,7 +47,7 @@ public class Evaluator<TVal, TFld> : IEvaluator<TVal, TFld>, IEquatable<bool>
     public IValidator<TVal> Validator { get; }
     #endregion
 
-    internal Evaluator(IValidator<TVal> validator, Func<TVal, TFld> selector, TVal? value, string name)
+    public Evaluator(IValidator<TVal> validator, Func<TVal, TFld> selector, TVal? value, string name)
     {
         _selector = selector;
         Validator = validator;

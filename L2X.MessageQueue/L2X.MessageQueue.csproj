@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\L2X.Core\L2X.Core.csproj" />
     <ProjectReference Include="..\L2X.Exchange.Core\L2X.Exchange.Core.csproj" />
+    <ProjectReference Include="..\L2X.Exchange.Data\L2X.Exchange.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

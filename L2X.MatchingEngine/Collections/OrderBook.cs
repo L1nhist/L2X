@@ -45,8 +45,14 @@ public class OrderBook : IOrderBook<MOrder>
 
     public IEnumerable<IPriceLevel<MOrder>> StopBids => _stopBids.PriceLevels;
 
-    public IEnumerable<KeyValuePair<long, HashSet<OrderId>>> GoodTillDates => _goodTillDate;
+    public IEnumerable<KeyValuePair<long, HashSet<long>>> GoodTillDates => _goodTillDate;
     #endregion
+
+    public IPriceLevel<MOrder>? GetPriceLevel(bool side, decimal price)
+    {
+        var lst = side ? _bids : _asks;
+        return lst.GetLevel(price);
+    }
 
     #region Methods
     internal bool CheckCanFillOrder(bool side, decimal volume, decimal limitPrice)
@@ -116,10 +122,10 @@ public class OrderBook : IOrderBook<MOrder>
         return priceLevels;
     }
 
-    internal bool TryGetOrder(OrderId orderId, out MOrder? order)
+    internal bool TryGetOrder(long orderId, out MOrder? order)
         => _orders.TryGetOrder(orderId, out order);
 
-    internal List<HashSet<OrderId>>? GetExpiredOrders(long timeNow)
+    internal List<HashSet<long>>? GetExpiredOrders(long timeNow)
         => _goodTillDate.GetExpiredOrders(timeNow);
 
     internal bool FillOrder(MOrder order, decimal volume)

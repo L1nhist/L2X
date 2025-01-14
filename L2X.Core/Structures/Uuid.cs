@@ -4,7 +4,7 @@
 /// Strong type struct as a replacement for Guid structure
 /// </summary>
 [JsonConverter(typeof(UuidJsonConverter))]
-public readonly struct Uuid : IComparable, IComparable<Guid>, IEquatable<Guid>, IFormattable
+public readonly struct Uuid : IComparable, IFormattable, IComparable<Guid>, IEquatable<Guid>
 {
     #region Operators
     public static bool operator ==(Uuid lft, Uuid rgt)
@@ -61,34 +61,60 @@ public readonly struct Uuid : IComparable, IComparable<Guid>, IEquatable<Guid>, 
     /// </summary>
     public static Uuid NewCode => new(Crypto.Random.NewGuid());
 
-    /// <summary>
-    /// Try parse a string to Guid with or without format or culture provider
-    /// if explicit or else try parse a BASE64 string to Guid 
-    /// </summary>
-    /// <param name="value">Guid text content</param>
-    /// <param name="format"> One of the following specifiers that indicates
-    /// the exact format to use when interpreting input: "N", "D", "B", "P",
-    /// or "X"</param>
-    /// <param name="provider">An object that provides culture-specific
-    /// formatting information</param>
-    /// <returns>Guid value that was parsed or Guid empty if failed</returns>
-    private static Guid ToGuid(string? value, string? format = null, IFormatProvider? provider = null)
-    {
-        if (Util.IsEmpty(value)) return Guid.Empty;
+    public static Guid? ParseGuid(string? value)
+        => TryGuid(value, null, out Guid? guid) ? guid : null;
 
-        try
-        {
+	public static bool TryGuid(string? value, string? format, [NotNullWhen(true)] out Guid? guid)
+	{
+        guid = null;
+		if (Util.IsEmpty(value)) return false;
+
+		try
+		{
             if (!Util.IsEmpty(format))
-                return Guid.ParseExact(value, format);
-            else if (provider != null)
-                return Guid.Parse(value, provider);
-        }
-        catch { }
+            {
+                guid = Guid.ParseExact(value, format);
+                return true;
+            }
+		}
+		catch { }
+
+		try
+		{
+            if (Guid.TryParse(value, out Guid result))
+            {
+                guid = result;
+                return true;
+            }
+            
+            guid = new(Convert.FromBase64String((value.EndsWith("==") ? value : value + "==").Replace('@', '+').Replace('$', '/')));
+            return true;
+		}
+		catch { }
+
+		return false;
+	}
+
+	/// <summary>
+	/// Try parse a string to Guid with or without format or culture provider
+	/// if explicit or else try parse a BASE64 string to Guid 
+	/// </summary>
+	/// <param name="value">Guid text content</param>
+	/// <param name="format"> One of the following specifiers that indicates
+	/// the exact format to use when interpreting input: "N", "D", "B", "P",
+	/// or "X"</param>
+	/// <param name="provider">An object that provides culture-specific
+	/// formatting information</param>
+	/// <returns>Guid value that was parsed or Guid empty if failed</returns>
+	private static Guid ToGuid(string? value, string? format = null, IFormatProvider? provider = null)
+	{
+		if (Util.IsEmpty(value)) return Guid.Empty;
+		if (TryGuid(value, format, out Guid? result)) return result.Value;
 
         try
         {
-            if (!Guid.TryParse(value, out Guid guid))
-                return new(Convert.FromBase64String((value.EndsWith("==") ? value : value + "==").Replace('@', '+').Replace('$', '/')));
+            if (provider != null)
+                return Guid.Parse(value, provider);
         }
         catch { }
 

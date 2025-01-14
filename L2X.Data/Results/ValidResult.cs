@@ -1,4 +1,5 @@
-﻿using L2X.Data.Extensions;
+﻿using L2X.Core.Validations;
+using L2X.Data.Extensions;
 
 namespace L2X.Data.Results;
 
@@ -23,6 +24,7 @@ public class ValidResult<T> : BaseResult<T>
 
     public void AddError(string field, string message)
     {
+        base.Error("", HttpStatusCode.BadRequest);
         Errors.Add(field, message);
     }
 
@@ -38,5 +40,16 @@ public class ValidResult<T> : BaseResult<T>
             IsEmpty = false;
             return (ValidResult<T>)Ok(data);
         }
+    }
+
+    public ValidResult<T> IsValid(IValidator<T> validator)
+    {
+        if (IsEmpty) return this;
+        if (!validator.Validate(Data))
+        {
+            return this.BadRequest();
+        }
+        
+        return (ValidResult<T>)Ok();
     }
 }

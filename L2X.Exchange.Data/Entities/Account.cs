@@ -5,7 +5,7 @@
 /// </summary>
 [Table("Account")]
 [Index("OwnerId", "TickerId", IsUnique = true)]
-public class Account : Entity<Guid>, IMomentable,IRemovable
+public class Account : Entity, IMomentable,IRemovable
 {
     /// <summary>
     /// Mã Uid định danh Thành viên sở hữu tài khoản

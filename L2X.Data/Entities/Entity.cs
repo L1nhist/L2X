@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using L2X.Core.Structures;
+using System.Diagnostics.CodeAnalysis;
 
 namespace L2X.Data.Entities;
 
@@ -9,5 +10,11 @@ public class Entity<T> : IEntity<T>
     [Key]
     [Required]
     [NotNull]
-    public required T Id { get; set; }
+    public T Id { get; set; }
+}
+
+public class Entity : Entity<Guid>
+{
+    public Entity()
+        => Id = Uuid.NewCode;
 }

@@ -22,8 +22,7 @@ public class DataManagementService<T> : IDataManagementService<T>
         Repository = repository;
     }
 
-    protected virtual void BuildQuery<TFilt>(TFilt? filter)
-        where TFilt : FilterRequest
+    protected virtual void BuildQuery(FilterRequest? filter)
     {
         if (!Util.IsEmpty(filter?.OrderBy))
             Repository.SortBy(filter.OrderBy.ToArray());
@@ -108,15 +107,32 @@ public class DataManagementService<T> : IDataManagementService<T>
             if (ent == null) return result.NotFound("Can not find specific data");
 
             var data = Mapper.Map<TRes>(ent);
-            if (data != null) return result.Ok(data);
+            if (data == null) return result.BadRequest("Result data can not be mapped as usual");
+            return result.Ok(data);
         }
         catch (Exception ex)
         {
             WriteLog(ex);
             return result.Error(ex.Message);
         }
-        
-        return result.BadRequest("Result data can not be mapped as usual");
+    }
+
+    public async Task<IResult<IEnumerable<TRes>>> Search<TRes>(FilterRequest request)
+    {
+        var result = Result.NewList<TRes>();
+        try
+        {
+            if (request != null) BuildQuery(request);
+
+            var ents = await Repository.GetList<TRes>();
+            if (Util.IsEmpty(ents)) return result.NotFound("Can not find specific data");
+            return result.Ok(ents);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(ex);
+            return result.Error(ex.Message);
+        }
     }
 
     public async Task<IResult<IEnumerable<TRes>>> Search<TReq, TRes>(TReq request)
@@ -128,6 +144,24 @@ public class DataManagementService<T> : IDataManagementService<T>
             if (request != null) BuildQuery(request);
 
             var ents = await Repository.GetList<TRes>();
+            if (Util.IsEmpty(ents)) return result.NotFound("Can not find specific data");
+            return result.Ok(ents);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(ex);
+            return result.Error(ex.Message);
+        }
+    }
+
+    public async Task<PagedResult<TRes>> Paginate<TRes>(PagingRequest request)
+    {
+        var result = Result.NewPage<TRes>();
+        try
+        {
+            if (request != null) BuildQuery(request);
+
+            var ents = await Repository.GetPaging<TRes>(request?.PageIndex ?? 0, request?.PageSize ?? 0);
             if (Util.IsEmpty(ents)) return result.NotFound("Can not find specific data");
             return result.Ok(ents);
         }
@@ -157,7 +191,7 @@ public class DataManagementService<T> : IDataManagementService<T>
         }
     }
 
-    public virtual Task<ValidResult<T>> Validate<TReq>(TReq? request)
+    public virtual Task<ValidResult<T>> Validate(IRequest? request)
     {
         var valid = new ValidResult<T>();
         if (Util.IsEmpty(request)) return Task.FromResult(valid.BadRequest("Requested data can not be mapped as usual"));

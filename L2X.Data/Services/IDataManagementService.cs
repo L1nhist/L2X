@@ -21,13 +21,17 @@ public interface IDataManagementService<T>
     Task<IResult<TRes>> Select<TReq, TRes>(TReq request)
         where TReq : IRequest;
 
+    Task<IResult<IEnumerable<TRes>>> Search<TRes>(FilterRequest request);
+
     Task<IResult<IEnumerable<TRes>>> Search<TReq, TRes>(TReq request)
         where TReq : FilterRequest;
+
+    Task<PagedResult<TRes>> Paginate<TRes>(PagingRequest request);
 
     Task<PagedResult<TRes>> Paginate<TReq, TRes>(TReq request)
         where TReq : PagingRequest;
 
-    Task<ValidResult<T>> Validate<TReq>(TReq? request);
+    Task<ValidResult<T>> Validate(IRequest? request);
 
     void WriteLog(string msg = "");
 

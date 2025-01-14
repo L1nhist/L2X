@@ -8,8 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\L2X.Core\L2X.Core.csproj" />
+    <ProjectReference Include="..\L2X.Data\L2X.Data.csproj" />
     <ProjectReference Include="..\L2X.Exchange.Core\L2X.Exchange.Core.csproj" />
-    <ProjectReference Include="..\L2X.MessageQueue\L2X.MessageQueue.csproj" />
+    <ProjectReference Include="..\L2X.Exchange.Data\L2X.Exchange.Data.csproj" />
+    <ProjectReference Include="..\L2X.Services\L2X.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,8 +20,7 @@
     <Using Include="L2X.Exchange.Exceptions" />
     <Using Include="L2X.Exchange.Models" />
     <Using Include="L2X.MatchingEngine.Collections" />
-    <Using Include="L2X.MessageQueue.Models" />
-    <Using Include="L2X.MessageQueue.Models.Matching" />
+    <Using Include="L2X.Services.Models.Matching" />
     <Using Include="System.Collections" />
   </ItemGroup>
 

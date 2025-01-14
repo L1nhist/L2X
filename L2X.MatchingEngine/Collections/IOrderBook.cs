@@ -25,5 +25,5 @@ public interface IOrderBook<T>
 
     IEnumerable<IPriceLevel<T>> StopBids { get; }
 
-    IEnumerable<KeyValuePair<long, HashSet<OrderId>>> GoodTillDates { get; }
+    IEnumerable<KeyValuePair<long, HashSet<long>>> GoodTillDates { get; }
 }

@@ -1,5 +1,5 @@
-﻿using L2X.Data.Extensions;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using L2X.Data;
+using L2X.Exchange.Data.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,9 +14,20 @@ public static class Startup
         services.AddDbContext<L2XDbContext>((provider, opts) =>
             {
                 opts.UseNpgsql(Configuration.GetConnectionString("NpgsqlDB"), opts => opts.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
-                opts.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
+                //opts.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
             }
         );
+
         services.AddScoped<DbContext, L2XDbContext>();
+        services.AddScoped<IOrderService, OrderService>();
     }
+
+    public static IServiceCollection AddPostgreExchangeContext(this IServiceCollection services, IConfiguration Configuration)
+        => services.AddDataScope().AddDbContext<L2XDbContext>((provider, opts) =>
+                {
+                    opts.UseNpgsql(Configuration.GetConnectionString("NpgsqlDB"), opts => opts.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+                    //opts.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
+                })
+            .AddScoped<DbContext, L2XDbContext>()
+            .AddScoped<IOrderService, OrderService>();
 }

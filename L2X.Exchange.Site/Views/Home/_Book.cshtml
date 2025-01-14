@@ -1,0 +1,39 @@
+﻿<section id="order">
+    <a class="btn rgt fresher"><i class="ico duot rebuild"></i> Tải lại</a>
+    <div class="pgtit">Thông tin thị trường [BTC-USDT]</div>
+    <table id="preBuy" class="dtable" data-action="~/orders/market-info" data-refresh="1500">
+        <thead>
+            <tr>
+                <th data-ref="lastprice">Giá</th>
+                <th data-ref="minprice">Thấp nhất</th>
+                <th data-ref="maxprice">Cao nhất</th>
+                <th data-ref="pricechg">24h qua</th>
+                <th data-ref="pricerate">%</th>
+                <th data-ref="totalbids">BTC (24h)</th>
+                <th data-ref="totalasks">USDT (24h)</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="row">
+        <div class="col s12 l6">
+            <table id="preBuy" class="dtable" data-action="~/orders/book-buy" data-refresh="1500">
+                <thead>
+                    <tr>
+                        <th data-ref="price">Giá</th>
+                        <th data-ref="volume">Số lượng</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="col s12 l6">
+            <table id="preSell" class="dtable" data-action="~/orders/book-sell" data-refresh="1500">
+                <thead>
+                    <tr>
+                        <th data-ref="price">Giá</th>
+                        <th data-ref="volume">Số lượng</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>

@@ -1,6 +1,6 @@
 ﻿namespace L2X.MatchingEngine.Collections;
 
-public class OrderIdTracker(int rangeSize = 256) : IEnumerable<OrderId>
+public class OrderIdTracker(int rangeSize = 256) : IEnumerable<long>
 {
     private class RangeTrackerComparer : IComparer<RangeTracker>
     {
@@ -29,7 +29,7 @@ public class OrderIdTracker(int rangeSize = 256) : IEnumerable<OrderId>
     #endregion
 
     #region Overridens
-    public IEnumerator<OrderId> GetEnumerator()
+    public IEnumerator<long> GetEnumerator()
     {
         foreach (var range in Ranges)
             foreach (var orderId in range)
@@ -72,14 +72,14 @@ public class OrderIdTracker(int rangeSize = 256) : IEnumerable<OrderId>
         }
     }
 
-    private RangeTracker CreateRange(OrderId orderId)
+    private RangeTracker CreateRange(long orderId)
     {
         _current = new RangeTracker(orderId - orderId % _rangeSize, _rangeSize);
         _ranges.Add(_current);
         return _current;
     }
 
-    private RangeTracker? GetRange(OrderId orderId)
+    private RangeTracker? GetRange(long orderId)
     {
         if (_current == null || orderId < _current.FromOrderId || orderId > _current.ToOrderId)
             _current = _ranges.FirstOrDefault(r => orderId >= r.FromOrderId && orderId <= r.ToOrderId);
@@ -87,10 +87,10 @@ public class OrderIdTracker(int rangeSize = 256) : IEnumerable<OrderId>
         return _current;
     }
 
-    public bool IsMarked(OrderId orderId)
+    public bool IsMarked(long orderId)
         => GetRange(orderId)?.IsMarked(orderId) ?? false;
 
-    public bool TryMark(OrderId orderId)
+    public bool TryMark(long orderId)
     {
         var result = (GetRange(orderId) ?? CreateRange(orderId)).TryMark(orderId);
         if (result && ++_markIndex >= _rangeSize * 4)

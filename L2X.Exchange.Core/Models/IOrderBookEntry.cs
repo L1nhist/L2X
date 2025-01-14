@@ -3,7 +3,7 @@
 /// <summary>
 /// BookEntry is represent for each entry in OrderBook
 /// </summary>
-public interface IBookEntry
+public interface IOrderBookEntry
 {
     /// <summary>
     /// Price step in OrderBook

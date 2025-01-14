@@ -89,7 +89,7 @@ public static class ExpressionExtensions
     /// <param name="orElse">True is "Or", else is "And"</param>
     /// <returns>Expression{Func{T, bool}}</returns>
     [Pure]
-    public static Expression<Func<T, bool>>? Extend<T>(this Filter<T>? exp1, Expression<Func<T, bool>>? exp2, bool @orElse = true)
+    public static Expression<Func<T, bool>>? Extend<T>(this FilterExpression<T>? exp1, Expression<Func<T, bool>>? exp2, bool @orElse = true)
         => exp1 == null ? exp2 : @orElse ? exp1.Or(exp2) : exp1.And(exp2);
     #endregion
 

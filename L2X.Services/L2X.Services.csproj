@@ -7,11 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.6.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+    <PackageReference Include="protobuf-net" Version="3.2.45" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\L2X.Core\L2X.Core.csproj" />
+    <ProjectReference Include="..\L2X.Exchange.Core\L2X.Exchange.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Confluent.Kafka" />
+    <Using Include="L2X.Core.Extensions" />
+    <Using Include="L2X.Core.Utilities" />
+    <Using Include="L2X.Exchange.Enums" />
+    <Using Include="L2X.Exchange.Models" />
+    <Using Include="Microsoft.Extensions.Configuration" />
+    <Using Include="Microsoft.Extensions.Logging" />
+    <Using Include="ProtoBuf" />
   </ItemGroup>
 
 </Project>

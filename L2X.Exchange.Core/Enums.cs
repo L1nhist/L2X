@@ -16,20 +16,32 @@ public enum OrderState : byte
     Filled
 }
 
-public enum OrderType : byte
+public enum OrderMode : byte
 {
     /// <summary>
     /// Limit type
     /// </summary>
-    Limit,
+    Limit = 1,
     /// <summary>
     /// Market type
     /// </summary>
-    Market,
+    Market = 2,
+    /// <summary>
+    /// Stop Limit type
+    /// </summary>
+    Stop_Limit = 3,
+    /// <summary>
+    /// Stop Market type
+    /// </summary>
+    Stop_Market = 4,
+    /// <summary>
+    /// Iceberg (Special limit that match partialy)
+    /// </summary>
+    Iceberg = 5,
     /// <summary>
     /// Other order type
     /// </summary>
-    Other
+    Others = 9,
 }
 
 public enum OrderCondition : byte

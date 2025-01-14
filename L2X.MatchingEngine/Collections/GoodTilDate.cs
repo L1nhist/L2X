@@ -1,9 +1,11 @@
-﻿namespace L2X.MatchingEngine.Collections;
+﻿using L2X.Services.Models.Matching;
 
-internal class GoodTillDate : IEnumerable<KeyValuePair<long, HashSet<OrderId>>>
+namespace L2X.MatchingEngine.Collections;
+
+internal class GoodTillDate : IEnumerable<KeyValuePair<long, HashSet<long>>>
 {
     private long _minTime = long.MinValue;
-    private readonly SortedDictionary<long, HashSet<OrderId>> _orderSets = [];
+    private readonly SortedDictionary<long, HashSet<long>> _orderSets = [];
 
     public void Add(MOrder order)
     {
@@ -11,9 +13,9 @@ internal class GoodTillDate : IEnumerable<KeyValuePair<long, HashSet<OrderId>>>
             Add(order.CancelOn, order.Id);
     }
 
-    void Add(long time, OrderId orderId)
+    void Add(long time, long orderId)
     {
-        if (!_orderSets.TryGetValue(time, out HashSet<OrderId>? orderIds))
+        if (!_orderSets.TryGetValue(time, out HashSet<long>? orderIds))
         {
             orderIds = [];
             _orderSets.Add(time, orderIds);
@@ -24,9 +26,9 @@ internal class GoodTillDate : IEnumerable<KeyValuePair<long, HashSet<OrderId>>>
         orderIds.Add(orderId);
     }
 
-    public List<HashSet<OrderId>>? GetExpiredOrders(long timeNow)
+    public List<HashSet<long>>? GetExpiredOrders(long timeNow)
     {
-        List<HashSet<OrderId>>? expireds = null;
+        List<HashSet<long>>? expireds = null;
         if (_minTime <= timeNow)
         {
             expireds = [];
@@ -48,7 +50,7 @@ internal class GoodTillDate : IEnumerable<KeyValuePair<long, HashSet<OrderId>>>
         }
     }
 
-    void Remove(long time, OrderId orderId)
+    void Remove(long time, long orderId)
     {
         if (_orderSets.TryGetValue(time, out var orderIds))
         {
@@ -63,7 +65,7 @@ internal class GoodTillDate : IEnumerable<KeyValuePair<long, HashSet<OrderId>>>
     }
 
     #region Interface Implementation
-    public IEnumerator<KeyValuePair<long, HashSet<OrderId>>> GetEnumerator()
+    public IEnumerator<KeyValuePair<long, HashSet<long>>> GetEnumerator()
         => _orderSets.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator()

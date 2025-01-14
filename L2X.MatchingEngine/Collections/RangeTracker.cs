@@ -2,24 +2,24 @@
 
 namespace L2X.MatchingEngine.Collections;
 
-internal class RangeTracker(OrderId startId, int length) : IEnumerable<OrderId>, IEnumerable
+internal class RangeTracker(long startId, int length) : IEnumerable<long>, IEnumerable
 {
     #region Properties
     private BitArray? _bitArray = length > 1 ? new BitArray(length) : null;
 
-    private readonly OrderId _startId = startId;
+    private readonly long _startId = startId;
 
     internal bool Compacted => _bitArray == null;
 
-    public OrderId FromOrderId { get; private set; } = startId;
+    public long FromOrderId { get; private set; } = startId;
 
-    public OrderId ToOrderId { get; private set; } = startId + length - 1;
+    public long ToOrderId { get; private set; } = startId + length - 1;
     #endregion
 
     #region Overridens
-    public IEnumerator<OrderId> GetEnumerator()
+    public IEnumerator<long> GetEnumerator()
     {
-        for (OrderId i = FromOrderId; i <= ToOrderId; i++)
+        for (var i = FromOrderId; i <= ToOrderId; i++)
         {
             if (IsMarked(i)) yield return i;
             else continue;
@@ -31,14 +31,14 @@ internal class RangeTracker(OrderId startId, int length) : IEnumerable<OrderId>,
     #endregion
 
     [MemberNotNullWhen(true, nameof(_bitArray))]
-    private bool IsInRange(OrderId orderId)
+    private bool IsInRange(long orderId)
         => _bitArray != null && orderId >= _startId && orderId <= _startId + _bitArray.Length - 1;
 
-    public bool TryMark(OrderId orderId)
+    public bool TryMark(long orderId)
     {
         if (IsInRange(orderId))
         {
-            int index = orderId - _startId;
+            int index = (int)(orderId - _startId);
             if (!_bitArray.Get(index))
             {
                 _bitArray.Set(index, true);
@@ -62,23 +62,23 @@ internal class RangeTracker(OrderId startId, int length) : IEnumerable<OrderId>,
         return count;
     }
 
-    public void ExtendMarkFromOrderId(OrderId fromOrderId)
+    public void ExtendMarkFromOrderId(long fromOrderId)
     {
         FromOrderId = fromOrderId;
     }
 
-    public void ExtendMarkToOrderId(OrderId toOrderId)
+    public void ExtendMarkToOrderId(long toOrderId)
     {
         ToOrderId = toOrderId;
     }
 
-    public bool IsMarked(OrderId orderId)
+    public bool IsMarked(long orderId)
     {
         if (orderId < FromOrderId || orderId > ToOrderId) return false;
 
         if (_bitArray != null && IsInRange(orderId))
         {
-            int index = orderId - _startId;
+            int index = (int)(orderId - _startId);
             return _bitArray[index];
         }
 

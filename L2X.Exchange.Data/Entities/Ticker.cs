@@ -4,8 +4,8 @@
 /// Đơn vị tiền tệ phục vụ giao dịch trên hệ thống
 /// </summary>
 [Table("Ticker")]
-[Index("Code", IsUnique = true)]
-public class Ticker : Entity<Guid>, IAuditable, ISortable, IRemovable
+[Index("Name", IsUnique = true)]
+public class Ticker : Entity, IAuditable, ISortable, IRemovable
 {
     /// <summary>
     /// Mã Uid định danh cho Đơn vị tiền tệ cấp cao hơn
@@ -157,12 +157,12 @@ public class Ticker : Entity<Guid>, IAuditable, ISortable, IRemovable
     /// <summary>
     /// Danh sách các Kênh giao dịch
     /// </summary>
-    public virtual IEnumerable<Symbol>? BaseSymbols { get; set; }
+    public virtual IEnumerable<Market>? BaseSymbols { get; set; }
 
     /// <summary>
     /// Danh sách các Kênh giao dịch
     /// </summary>
-    public virtual IEnumerable<Symbol>? QuoteSymbols { get; set; }
+    public virtual IEnumerable<Market>? QuoteSymbols { get; set; }
 
     /// <summary>
     /// Danh sách các tài khoản thuộc về đơn vị tiền tệ này

@@ -1,17 +1,8 @@
 ﻿namespace L2X.MessageQueue.Services;
 
-public interface IMessageConsumerService
+public interface IMessageConsumerService<T>
 {
-    int Interval { get; }
-
     Task Subscribe(string topic, int interval);
 
-    Task<bool> Consume(string message);
-}
-
-public interface IMessageConsumerService<T> : IMessageConsumerService
-{
-    T? Deserialize(string message);
-
-    Task<bool> Consume(T? data);
+    T? Deserialize(string? message);
 }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Using Include="AutoMapper" />
+    <Using Include="L2X.Core.Extensions" />
     <Using Include="L2X.Core.Models" />
     <Using Include="L2X.Core.Utilities" />
     <Using Include="L2X.Data.Entities" />

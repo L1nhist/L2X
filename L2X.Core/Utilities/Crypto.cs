@@ -317,7 +317,7 @@ public sealed class Crypto
             return (_last = result);
         }
 
-        public int NewNumber(int length = 1)
+        public int NewNumber(int length)
         {
             if (length < 1) return 0;
 

@@ -1,0 +1,6 @@
+@L2X.MEServer_HostAddress = http://localhost:5092
+
+GET {{L2X.MEServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

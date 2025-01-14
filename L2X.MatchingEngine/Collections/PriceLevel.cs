@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using L2X.Services.Models.Matching;
+using System.Diagnostics.CodeAnalysis;
 
 namespace L2X.MatchingEngine.Collections;
 

@@ -1,6 +1,6 @@
 ﻿namespace L2X.MatchingEngine.Collections;
 
-internal class Side<Tpl, TOrd>(IComparer<decimal> priceComparer, IComparer<Tpl> levelComparer)
+internal class Side<Tpl, TOrd>(IComparer<decimal> priceComparer)
     where Tpl : class, IPriceLevel<TOrd>, new()
     where TOrd : class, IOrder
 {
@@ -13,22 +13,19 @@ internal class Side<Tpl, TOrd>(IComparer<decimal> priceComparer, IComparer<Tpl> 
             => _ascending ? x.CompareTo(y) : y.CompareTo(x);
     }
 
-    private class PriceLevelComparer(bool ascending = true) : IComparer<Tpl>
+    private class PriceLevelComparer(IComparer<decimal> comparer) : IComparer<Tpl>
     {
-        private readonly bool _ascending = ascending;
+        private readonly IComparer<decimal> _comparer = comparer;
 
         public int Compare(Tpl? x, Tpl? y)
-            => _ascending ? x!.Price.CompareTo(y!.Price) : y!.Price.CompareTo(x!.Price);
+            => _comparer.Compare(x!.Price, y!.Price);
     }
 
     private readonly static PriceComparer _ascPricing = new();
     private readonly static PriceComparer _descPricing = new(false);
 
-    private readonly static PriceLevelComparer _ascLeveling = new();
-    private readonly static PriceLevelComparer _descLeveling = new(false);
-
-    public static Side<Tpl, TOrd> Ascending => new(_ascPricing, _ascLeveling);
-    public static Side<Tpl, TOrd> Descending => new(_descPricing, _descLeveling);
+    public static Side<Tpl, TOrd> Ascending => new(_ascPricing);
+    public static Side<Tpl, TOrd> Descending => new(_descPricing);
     #endregion
 
     #region Properties
@@ -36,7 +33,7 @@ internal class Side<Tpl, TOrd>(IComparer<decimal> priceComparer, IComparer<Tpl> 
 
     private readonly IComparer<decimal> _comparer = priceComparer;
 
-    private readonly SortedSet<Tpl> _levels = new(levelComparer);
+    private readonly SortedSet<Tpl> _levels = new(new PriceLevelComparer(priceComparer));
 
     public int Count => _levels.Count;
 
@@ -44,6 +41,12 @@ internal class Side<Tpl, TOrd>(IComparer<decimal> priceComparer, IComparer<Tpl> 
 
     public IEnumerable<Tpl> PriceLevels => _levels;
     #endregion
+
+    public Tpl GetLevel(decimal price)
+	{
+		_current.SetPrice(price);
+		return _levels.TryGetValue(_current, out Tpl? level) ? level : null;
+	}
 
     #region Methods
     public void AddOrder(TOrd order, decimal price)

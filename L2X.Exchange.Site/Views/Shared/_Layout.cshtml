@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L2X Exchange</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/icofont.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="admin must-auth" data-module-default="#dashboard">
+    <div class="navbar">
+        <a class="menuer" href="#"><span></span></a>
+        <a class="logo-brand" href="index.html">
+            <img src="img/logo.svg" />
+            <h1>L2X <small>Exchange</small></h1>
+        </a>
+    </div>
+
+    <div class="sidenav">
+        <ul class="lst">
+            <li><a href="/$member"><i class="ico duot user"></i> Thành viên</a></li>
+            <li><a href="/$early"><i class="ico duot chart"></i> Lệnh chờ đặt</a></li>
+            <li><a href="/$order"><i class="ico duot chart"></i> Lệnh chờ khớp</a></li>
+            <li><a href="/$match"><i class="ico duot sourcetree"></i> Lệnh đã khớp</a></li>
+            <li><a href="/$cancel"><i class="ico duot chart"></i> Lệnh đã hủy</a></li>
+            <li><a href="/$book"><i class="ico duot chart"></i> Orderbook</a></li>
+            <li><a href="/$ticker"><i class="ico duot credit"></i> Loại tiền mã hóa</a></li>
+            <li><a href="/$symbol"><i class="ico duot table"></i> Thị trường giao dịch</a></li>
+        </ul>
+    </div>
+
+    <div class="cover">
+        <div id="msgtip" class="msgtip hide">
+            <span class="msg-cont"></span>
+            <a class="btn rgt hidder" href="#msgtip"></a>
+        </div>
+
+        @RenderBody()
+
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

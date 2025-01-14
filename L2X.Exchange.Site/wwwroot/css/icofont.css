@@ -1,0 +1,995 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "IcoFont";
+  font-weight: normal;
+  font-style: "Regular";
+  src: url("../fonts/icofont.woff2") format("woff2"), url("../fonts/icofont.woff") format("woff");
+}
+.duot {
+  font-family: "IcoFont" !important;
+  position: relative;
+}
+.duot::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.duot::after {
+  opacity: 0.4;
+  transition: all ease 0.2s;
+}
+:hover > .duot::after {
+  opacity: 0.75;
+}
+.duot.access-levels::after {
+  content: "𓪲";
+}
+.duot.access-levels::before {
+  content: "𓪳";
+}
+.duot.accessibility::after {
+  content: "𓪴";
+}
+.duot.accessibility::before {
+  content: "𓪵";
+}
+.duot.add-users::after {
+  content: "𓪶";
+}
+.duot.add-users::before {
+  content: "𓪷";
+}
+.duot.address::after {
+  content: "𓪸";
+}
+.duot.address::before {
+  content: "𓪹";
+}
+.duot.angle-double-left::after {
+  content: "𓴂";
+}
+.duot.angle-double-left::before {
+  content: "𓴃";
+}
+.duot.angle-double-right::after {
+  content: "𓴋";
+}
+.duot.angle-double-right::before {
+  content: "𓴌";
+}
+.duot.apply::after {
+  content: "𓪺";
+}
+.duot.apply::before {
+  content: "𓪻";
+}
+.duot.archive::after {
+  content: "𓪼";
+}
+.duot.archive::before {
+  content: "𓪽";
+}
+.duot.arrow-first::after {
+  content: "𓪾";
+}
+.duot.arrow-first::before {
+  content: "𓪿";
+}
+.duot.arrow-last::after {
+  content: "𓫀";
+}
+.duot.arrow-last::before {
+  content: "𓫁";
+}
+.duot.articles::after {
+  content: "𓫂";
+}
+.duot.articles::before {
+  content: "𓫃";
+}
+.duot.ascending::after {
+  content: "𓫄";
+}
+.duot.ascending::before {
+  content: "𓫅";
+}
+.duot.backward::after {
+  content: "𓫆";
+}
+.duot.backward::before {
+  content: "𓫇";
+}
+.duot.bar::after {
+  content: "𓫈";
+}
+.duot.bar::before {
+  content: "𓫉";
+}
+.duot.batch::after {
+  content: "𓫊";
+}
+.duot.batch::before {
+  content: "𓫋";
+}
+.duot.book::after {
+  content: "𓫌";
+}
+.duot.book::before {
+  content: "𓫍";
+}
+.duot.bookmark::after {
+  content: "𓫎";
+}
+.duot.bookmark::before {
+  content: "𓫏";
+}
+.duot.briefcase-alt::after {
+  content: "𓫐";
+}
+.duot.briefcase-alt::before {
+  content: "𓫑";
+}
+.duot.briefcase::after {
+  content: "𓫒";
+}
+.duot.briefcase::before {
+  content: "𓫓";
+}
+.duot.broadcast::after {
+  content: "𓫔";
+}
+.duot.broadcast::before {
+  content: "𓫕";
+}
+.duot.brush::after {
+  content: "𓫖";
+}
+.duot.brush::before {
+  content: "𓫗";
+}
+.duot.bug::after {
+  content: "𓫘";
+}
+.duot.bug::before {
+  content: "𓫙";
+}
+.duot.calendar::after {
+  content: "𓫚";
+}
+.duot.calendar::before {
+  content: "𓫛";
+}
+.duot.camera::after {
+  content: "𓫜";
+}
+.duot.camera::before {
+  content: "𓫝";
+}
+.duot.cart::after {
+  content: "𓫞";
+}
+.duot.cart::before {
+  content: "𓫟";
+}
+.duot.category::after {
+  content: "𓫠";
+}
+.duot.category::before {
+  content: "𓫡";
+}
+.duot.chart::after {
+  content: "𓫢";
+}
+.duot.chart::before {
+  content: "𓫣";
+}
+.duot.checkedout::after {
+  content: "𓫤";
+}
+.duot.checkedout::before {
+  content: "𓫥";
+}
+.duot.click::after {
+  content: "𓫦";
+}
+.duot.click::before {
+  content: "𓫧";
+}
+.duot.cogs::after {
+  content: "𓫨";
+}
+.duot.cogs::before {
+  content: "𓫩";
+}
+.duot.comment::after {
+  content: "𓫪";
+}
+.duot.comment::before {
+  content: "𓫫";
+}
+.duot.compass::after {
+  content: "𓫬";
+}
+.duot.compass::before {
+  content: "𓫭";
+}
+.duot.components::after {
+  content: "𓫮";
+}
+.duot.components::before {
+  content: "𓫯";
+}
+.duot.contacts-alt::after {
+  content: "𓫰";
+}
+.duot.contacts-alt::before {
+  content: "𓫱";
+}
+.duot.contacts::after {
+  content: "𓫲";
+}
+.duot.contacts::before {
+  content: "𓫳";
+}
+.duot.content-scalling::after {
+  content: "𓫴";
+}
+.duot.content-scalling::before {
+  content: "𓫵";
+}
+.duot.content::after {
+  content: "𓫶";
+}
+.duot.content::before {
+  content: "𓫷";
+}
+.duot.contract-alt::after {
+  content: "𓫸";
+}
+.duot.contract-alt::before {
+  content: "𓫹";
+}
+.duot.credit::after {
+  content: "𓫺";
+}
+.duot.credit::before {
+  content: "𓫻";
+}
+.duot.cube::after {
+  content: "𓫼";
+}
+.duot.cube::before {
+  content: "𓫽";
+}
+.duot.dark-mode::after {
+  content: "𓫾";
+}
+.duot.dark-mode::before {
+  content: "𓫿";
+}
+.duot.dashboard::after {
+  content: "𓬀";
+}
+.duot.dashboard::before {
+  content: "𓬁";
+}
+.duot.database::after {
+  content: "𓬂";
+}
+.duot.database::before {
+  content: "𓬃";
+}
+.duot.descending::after {
+  content: "𓬄";
+}
+.duot.descending::before {
+  content: "𓬅";
+}
+.duot.disable-::after {
+  content: "𓬆";
+}
+.duot.disable-::before {
+  content: "𓬇";
+}
+.duot.download::after {
+  content: "𓬈";
+}
+.duot.download::before {
+  content: "𓬉";
+}
+.duot.duplicate-alt::after {
+  content: "𓴍";
+}
+.duot.duplicate-alt::before {
+  content: "𓴎";
+}
+.duot.duplicate::after {
+  content: "𓴏";
+}
+.duot.duplicate::before {
+  content: "𓴐";
+}
+.duot.envelope-badge::after {
+  content: "𓬊";
+}
+.duot.envelope-badge::before {
+  content: "𓬋";
+}
+.duot.envelope-open::after {
+  content: "𓬌";
+}
+.duot.envelope-open::before {
+  content: "𓬍";
+}
+.duot.envelope::after {
+  content: "𓬎";
+}
+.duot.envelope::before {
+  content: "𓬏";
+}
+.duot.equalizer::after {
+  content: "𓬐";
+}
+.duot.equalizer::before {
+  content: "𓬑";
+}
+.duot.exit::after {
+  content: "𓬒";
+}
+.duot.exit::before {
+  content: "𓬓";
+}
+.duot.expand-full::after {
+  content: "𓬔";
+}
+.duot.expand-full::before {
+  content: "𓬕";
+}
+.duot.expand::after {
+  content: "𓬖";
+}
+.duot.expand::before {
+  content: "𓬗";
+}
+.duot.eye-close::after {
+  content: "𓬘";
+}
+.duot.eye-close::before {
+  content: "𓬙";
+}
+.duot.eye-open::after {
+  content: "𓬚";
+}
+.duot.eye-open::before {
+  content: "𓬛";
+}
+.duot.feed::after {
+  content: "𓬜";
+}
+.duot.feed::before {
+  content: "𓬝";
+}
+.duot.field-group::after {
+  content: "𓬞";
+}
+.duot.field-group::before {
+  content: "𓬟";
+}
+.duot.fields::after {
+  content: "𓬠";
+}
+.duot.fields::before {
+  content: "𓬡";
+}
+.duot.file-add::after {
+  content: "𓬢";
+}
+.duot.file-add::before {
+  content: "𓬣";
+}
+.duot.file-check::after {
+  content: "𓬤";
+}
+.duot.file-check::before {
+  content: "𓬥";
+}
+.duot.file-minus::after {
+  content: "𓬦";
+}
+.duot.file-minus::before {
+  content: "𓳝";
+}
+.duot.file-remove::after {
+  content: "𓬨";
+}
+.duot.file-remove::before {
+  content: "𓬩";
+}
+.duot.file::after {
+  content: "𓬪";
+}
+.duot.file::before {
+  content: "𓬫";
+}
+.duot.first::after {
+  content: "𓬬";
+}
+.duot.first::before {
+  content: "𓬭";
+}
+.duot.flag::after {
+  content: "𓬮";
+}
+.duot.flag::before {
+  content: "𓬯";
+}
+.duot.folder-close::after {
+  content: "𓬰";
+}
+.duot.folder-close::before {
+  content: "𓬱";
+}
+.duot.folder-open::after {
+  content: "𓬲";
+}
+.duot.folder-open::before {
+  content: "𓬳";
+}
+.duot.folder-plus::after {
+  content: "𓬴";
+}
+.duot.folder-plus::before {
+  content: "𓬵";
+}
+.duot.folder-remove::after {
+  content: "𓬶";
+}
+.duot.folder-remove::before {
+  content: "𓬷";
+}
+.duot.gift::after {
+  content: "𓬸";
+}
+.duot.gift::before {
+  content: "𓬹";
+}
+.duot.grayscale::after {
+  content: "𓬺";
+}
+.duot.grayscale::before {
+  content: "𓬻";
+}
+.duot.grid-advance::after {
+  content: "𓬼";
+}
+.duot.grid-advance::before {
+  content: "𓬽";
+}
+.duot.groups::after {
+  content: "𓬾";
+}
+.duot.groups::before {
+  content: "𓬿";
+}
+.duot.home::after {
+  content: "𓭀";
+}
+.duot.home::before {
+  content: "𓭁";
+}
+.duot.increase::after {
+  content: "𓭂";
+}
+.duot.increase::before {
+  content: "𓭃";
+}
+.duot.info-circle::after {
+  content: "𓭄";
+}
+.duot.info-circle::before {
+  content: "𓭅";
+}
+.duot.info::after {
+  content: "𓭆";
+}
+.duot.info::before {
+  content: "𓭇";
+}
+.duot.lamp::after {
+  content: "𓭈";
+}
+.duot.lamp::before {
+  content: "𓭉";
+}
+.duot.last::after {
+  content: "𓭊";
+}
+.duot.last::before {
+  content: "𓭋";
+}
+.duot.learn::after {
+  content: "𓭌";
+}
+.duot.learn::before {
+  content: "𓭍";
+}
+.duot.link::after {
+  content: "𓭎";
+}
+.duot.link::before {
+  content: "𓭏";
+}
+.duot.list::after {
+  content: "𓭐";
+}
+.duot.list-thin::after {
+  content: "𓭑";
+}
+.duot.list-thin::before {
+  content: "𓭒";
+}
+.duot.list-thin::before {
+  content: "𓭓";
+}
+.duot.location-alt::after {
+  content: "𓭔";
+}
+.duot.location-alt::before {
+  content: "𓭕";
+}
+.duot.location::after {
+  content: "𓭖";
+}
+.duot.location::before {
+  content: "𓭗";
+}
+.duot.lock::after {
+  content: "𓭘";
+}
+.duot.lock::before {
+  content: "𓭙";
+}
+.duot.logs::after {
+  content: "𓯕";
+}
+.duot.logs::before {
+  content: "𓯖";
+}
+.duot.loop::after {
+  content: "𓭚";
+}
+.duot.loop::before {
+  content: "𓭛";
+}
+.duot.manage::after {
+  content: "𓭜";
+}
+.duot.manage-user::after {
+  content: "𓭝";
+}
+.duot.manage-user::before {
+  content: "𓭞";
+}
+.duot.manage-user::before {
+  content: "𓭟";
+}
+.duot.mass-mail::after {
+  content: "𓭠";
+}
+.duot.mass-mail::before {
+  content: "𓭡";
+}
+.duot.media::after {
+  content: "𓭢";
+}
+.duot.media::before {
+  content: "𓭣";
+}
+.duot.menu::after {
+  content: "𓭤";
+}
+.duot.menu::before {
+  content: "𓭥";
+}
+.duot.messaging::after {
+  content: "𓭦";
+}
+.duot.messaging::before {
+  content: "𓭧";
+}
+.duot.modules::after {
+  content: "𓭨";
+}
+.duot.modules::before {
+  content: "𓭩";
+}
+.duot.mouse-pointer-highlighter::after {
+  content: "𓭪";
+}
+.duot.mouse-pointer-highlighter::before {
+  content: "𓭫";
+}
+.duot.move::after {
+  content: "𓭬";
+}
+.duot.move::before {
+  content: "𓭭";
+}
+.duot.multilingual::after {
+  content: "𓭮";
+}
+.duot.multilingual::before {
+  content: "𓭯";
+}
+.duot.new-tab-alt::after {
+  content: "𓭰";
+}
+.duot.new-tab-alt::before {
+  content: "𓭱";
+}
+.duot.next::after {
+  content: "𓭲";
+}
+.duot.next::before {
+  content: "𓭳";
+}
+.duot.notification-circle::after {
+  content: "𓭴";
+}
+.duot.notification-circle::before {
+  content: "𓭵";
+}
+.duot.notification::after {
+  content: "𓳵";
+}
+.duot.notification::before {
+  content: "𓴔";
+}
+.duot.paint-brush::after {
+  content: "𓭸";
+}
+.duot.paint-brush::before {
+  content: "𓭹";
+}
+.duot.pause::after {
+  content: "𓭺";
+}
+.duot.pause::before {
+  content: "𓭻";
+}
+.duot.pencil::after {
+  content: "𓭼";
+}
+.duot.pencil::before {
+  content: "𓭽";
+}
+.duot.phone::after {
+  content: "𓭾";
+}
+.duot.phone::before {
+  content: "𓭿";
+}
+.duot.pictures::after {
+  content: "𓮀";
+}
+.duot.pictures::before {
+  content: "𓮁";
+}
+.duot.pie::after {
+  content: "𓮂";
+}
+.duot.pie::before {
+  content: "𓮃";
+}
+.duot.pin::after {
+  content: "𓮄";
+}
+.duot.pin::before {
+  content: "𓮅";
+}
+.duot.play-circle::after {
+  content: "𓮆";
+}
+.duot.play-circle::before {
+  content: "𓮇";
+}
+.duot.plugins::after {
+  content: "𓮈";
+}
+.duot.plugins::before {
+  content: "𓮉";
+}
+.duot.plus-circle::after {
+  content: "𓮊";
+}
+.duot.plus-circle::before {
+  content: "𓮋";
+}
+.duot.previous::after {
+  content: "𓮌";
+}
+.duot.previous::before {
+  content: "𓮍";
+}
+.duot.print::after {
+  content: "𓮎";
+}
+.duot.print::before {
+  content: "𓮏";
+}
+.duot.privacy::after {
+  content: "𓮐";
+}
+.duot.privacy::before {
+  content: "𓮑";
+}
+.duot.publish::after {
+  content: "𓮒";
+}
+.duot.publish::before {
+  content: "𓮓";
+}
+.duot.purge::after {
+  content: "𓮔";
+}
+.duot.purge::before {
+  content: "𓮕";
+}
+.duot.question-sign-circle::after {
+  content: "𓮖";
+}
+.duot.question-sign-circle::before {
+  content: "𓮗";
+}
+.duot.quote-left::after {
+  content: "𓮘";
+}
+.duot.quote-left::before {
+  content: "𓮙";
+}
+.duot.quote-right::after {
+  content: "𓮚";
+}
+.duot.quote-right::before {
+  content: "𓮛";
+}
+.duot.radio-checked::after {
+  content: "𓮜";
+}
+.duot.radio-checked::before {
+  content: "𓮝";
+}
+.duot.rebuild::after {
+  content: "𓮞";
+}
+.duot.rebuild::before {
+  content: "𓮟";
+}
+.duot.repeat::after {
+  content: "𓮠";
+}
+.duot.repeat::before {
+  content: "𓮡";
+}
+.duot.reply::after {
+  content: "𓮢";
+}
+.duot.reply::before {
+  content: "𓮣";
+}
+.duot.save::after {
+  content: "𓮤";
+}
+.duot.save::before {
+  content: "𓮥";
+}
+.duot.scissors::after {
+  content: "𓮦";
+}
+.duot.scissors::before {
+  content: "𓮧";
+}
+.duot.screen::after {
+  content: "𓮨";
+}
+.duot.screen::before {
+  content: "𓮩";
+}
+.duot.screwdriver::after {
+  content: "𓮪";
+}
+.duot.screwdriver::before {
+  content: "𓮫";
+}
+.duot.share-alt::after {
+  content: "𓮬";
+}
+.duot.share-alt::before {
+  content: "𓮭";
+}
+.duot.shield::after {
+  content: "𓮮";
+}
+.duot.shield::before {
+  content: "𓮯";
+}
+.duot.shuffle::after {
+  content: "𓮰";
+}
+.duot.shuffle::before {
+  content: "𓮱";
+}
+.duot.sign-in::after {
+  content: "𓮲";
+}
+.duot.sign-in::before {
+  content: "𓮳";
+}
+.duot.sign-out::after {
+  content: "𓮴";
+}
+.duot.sign-out::before {
+  content: "𓮵";
+}
+.duot.smart-search::after {
+  content: "𓮶";
+}
+.duot.smart-search::before {
+  content: "𓮷";
+}
+.duot.smiley-neutral::after {
+  content: "𓮸";
+}
+.duot.smiley-neutral::before {
+  content: "𓮹";
+}
+.duot.smiley-sad::after {
+  content: "𓮺";
+}
+.duot.smiley-sad::before {
+  content: "𓮻";
+}
+.duot.smiley::after {
+  content: "𓮼";
+}
+.duot.smiley::before {
+  content: "𓮽";
+}
+.duot.sourcetree::after {
+  content: "𓯐";
+}
+.duot.sourcetree::before {
+  content: "𓯑";
+}
+.duot.step-forward::after {
+  content: "𓮾";
+}
+.duot.step-forward::before {
+  content: "𓮿";
+}
+.duot.stop::after {
+  content: "𓯀";
+}
+.duot.stop::before {
+  content: "𓯁";
+}
+.duot.support::after {
+  content: "𓯂";
+}
+.duot.support::before {
+  content: "𓯃";
+}
+.duot.table::after {
+  content: "𓯄";
+}
+.duot.table::before {
+  content: "𓯅";
+}
+.duot.tag-double::after {
+  content: "𓯆";
+}
+.duot.tag-double::before {
+  content: "𓯇";
+}
+.duot.tags-squared::after {
+  content: "𓯈";
+}
+.duot.tags-squared::before {
+  content: "𓯉";
+}
+.duot.tags-trio::after {
+  content: "𓯊";
+}
+.duot.tags-trio::before {
+  content: "𓯋";
+}
+.duot.thumbs-down::after {
+  content: "𓯌";
+}
+.duot.thumbs-down::before {
+  content: "𓯍";
+}
+.duot.thumbs-up::after {
+  content: "𓯎";
+}
+.duot.thumbs-up::before {
+  content: "𓯏";
+}
+.duot.toggle-off::after {
+  content: "𓳹";
+}
+.duot.toggle-off::before {
+  content: "𓳸";
+}
+.duot.toggle-on::after {
+  content: "𓳺";
+}
+.duot.toggle-on::before {
+  content: "𓳻";
+}
+.duot.unlock::after {
+  content: "𓯒";
+}
+.duot.unlock::before {
+  content: "𓯓";
+}
+.duot.unpublish::after {
+  content: "𓳾";
+}
+.duot.unpublish::before {
+  content: "𓳿";
+}
+.duot.user-notes::after {
+  content: "𓯗";
+}
+.duot.user-notes::before {
+  content: "𓯘";
+}
+.duot.user::after {
+  content: "𓴓";
+}
+.duot.user::before {
+  content: "𓴆";
+}
+.duot.users::after {
+  content: "𓯙";
+}
+.duot.users::before {
+  content: "𓯚";
+}
+.duot.vcard::after {
+  content: "𓯛";
+}
+.duot.vcard::before {
+  content: "𓯜";
+}
+.duot.video::after {
+  content: "𓯝";
+}
+.duot.video::before {
+  content: "𓯞";
+}
+.duot.wand::after {
+  content: "𓯟";
+}
+.duot.wand::before {
+  content: "𓯠";
+}
+.duot.warning-circle::after {
+  content: "𓳩";
+}
+.duot.warning-circle::before {
+  content: "𓳪";
+}
+.duot.workflows::after {
+  content: "𓯡";
+}
+.duot.workflows::before {
+  content: "𓯢";
+}
+.duot.wrench::after {
+  content: "𓯣";
+}
+.duot.wrench::before {
+  content: "𓯤";
+}/*# sourceMappingURL=icofont.css.map */

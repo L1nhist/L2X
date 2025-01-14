@@ -1,6 +1,7 @@
 ﻿using AutoMapper.QueryableExtensions;
+using L2X.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
-using L2X.Core.Extensions;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace L2X.Data.Repositories;
 
@@ -16,28 +17,42 @@ public class DataRepository<TEnt>(DbContext context, IMapper mapper) : IReposito
     #endregion
 
     #region Privates
-    private static Expression<Func<TEnt, object>>? BuildSelector(string field, object value)
-    {
-        try
-        {
-            var prop = typeof(TEnt).GetProperty(field);
-            if (prop == null) return null;
+ //   private static Expression<Func<TEnt, object>>? BuildSelector(string field, object value)
+ //   {
+ //       try
+ //       {
+ //           var prop = typeof(TEnt).GetProperty(field);
+ //           if (prop == null) return null;
 
-            var param = Expression.Parameter(typeof(TEnt));
-            var cast = Expression.Convert(Expression.Property(param, prop), typeof(object));
-            return Expression.Lambda<Func<TEnt, object>>(cast, param);
-        }
-        catch { }
+ //           var param = Expression.Parameter(typeof(TEnt));
+ //           var cast = Expression.Convert(Expression.Property(param, prop), typeof(object));
+ //           return Expression.Lambda<Func<TEnt, object>>(cast, param);
+ //       }
+ //       catch { }
 
-        return null;
-    }
+ //       return null;
+	//}
 
-    private IQueryable<TEnt> GetQuery()
+	//private static Expression<Func<SetPropertyCalls<TEnt>, SetPropertyCalls<TEnt>>> CreateSetProp<TFld>(Expression<Func<TEnt, TFld>> selector, TFld value)
+	//{
+	//	var param = Expression.Parameter(typeof(SetPropertyCalls<TEnt>));
+	//	var method = typeof(SetPropertyCalls<TEnt>).GetMethods()
+	//				.Where(info => info.Name == nameof(SetPropertyCalls<TEnt>.SetProperty))
+	//				.Where(info => info.GetParameters() is [_, { ParameterType.IsConstructedGenericType: false }])
+	//				.Single();
+
+	//	// construct appropriately typed generic SetProperty
+	//	var generic = method.MakeGenericMethod(selector.Type.GetGenericArguments()[1]);
+	//	var caller = Expression.Call(param, generic, selector, Expression.Constant(value));
+	//	return Expression.Lambda<Func<SetPropertyCalls<TEnt>, SetPropertyCalls<TEnt>>>(caller, param);
+	//}
+
+	private IQueryable<TEnt> GetQuery()
         => _query ??= _context.Set<TEnt>().AsQueryable();
 
     private T EndQuery<T>(T value)
     {
-        _query = null;
+		_query = null;
         return value;
     }
     #endregion
@@ -112,18 +127,22 @@ public class DataRepository<TEnt>(DbContext context, IMapper mapper) : IReposito
         }
 
         return this;
-    }
+	}
 
-    /// <inheritdoc/>
-    public IRepository<TEnt> JoinBy<TFld>(Expression<Func<TEnt, TFld>> selection)
-    {
-        _query = GetQuery().Include(selection);
-        return this;
-    }
+	/// <inheritdoc/>
+	public IRepository<TEnt> JoinBy<TFld>(Expression<Func<TEnt, TFld>> selection)
+	{
+		_query = GetQuery().Include(selection);
+		return this;
+	}
 
     /// <inheritdoc/>
     public async Task<int> Commit()
-        => EndQuery(await _context.SaveChangesAsync());
+    {
+        var result = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return EndQuery(result);
+    }
 
     /// <inheritdoc/>
     public async Task<int> Count()
@@ -221,26 +240,34 @@ public class DataRepository<TEnt>(DbContext context, IMapper mapper) : IReposito
         return await Commit();
     }
 
-    /// <inheritdoc/>
-    public async Task<int> UpdateBy(string field, object value)
-        => await UpdateBy(BuildSelector(field, value), value);
+	/// <inheritdoc/>
+	public async Task<int> UpdateBy(Expression<Func<SetPropertyCalls<TEnt>, SetPropertyCalls<TEnt>>>? setter)
+        => setter == null ? 0 : EndQuery(await GetQuery().ExecuteUpdateAsync(setter));
+
+	/// <inheritdoc/>
+	public async Task<int> UpdateBy(Action<SetPropertyBuilder<TEnt>> builder)
+		=> builder == null ? 0 : await UpdateBy(SetPropertyBuilder.New(builder));
+
+	/// <inheritdoc/>
+	public async Task<int> UpdateBy(string? field, object? value)
+        => Util.IsEmpty(field) ? 0 : await UpdateBy(SetPropertyBuilder.New<TEnt>(field, value));
 
     /// <inheritdoc/>
-    public async Task<int> UpdateBy<TFld>(Expression<Func<TEnt, TFld>>? selector, TFld value)
-        => EndQuery(selector == null ? 0 : await GetQuery().ExecuteUpdateAsync(s => s.SetProperty(selector.Compile(), value)));
+    public async Task<int> UpdateBy<TFld>(Expression<Func<TEnt, TFld?>>? selector, TFld? value)
+        => selector == null ? 0 : await UpdateBy(SetPropertyBuilder.New(selector, value));
 
-    /// <inheritdoc/>
-    public async Task<int> Delete(bool firstOnly = false)
+	/// <inheritdoc/>
+	public async Task<int> Delete(int top = 0)
     {
-        _query = GetQuery();
+        var query = GetQuery();
 
-        if (firstOnly)
-            return EndQuery(await Delete(await _query.FirstOrDefaultAsync()));
+        if (top > 0)
+            query = query.Take(top);
 
         if (typeof(TEnt).IsInstanceOfType(typeof(IRemovable)))
             return await UpdateBy(e => ((IRemovable)e).IsDeleted, true);
 
-        return EndQuery(await Delete(await _query.ToListAsync()));
+        return EndQuery(await Delete(await query.ToListAsync()));
     }
 
     /// <inheritdoc/>
@@ -317,28 +344,30 @@ public class DataRepository<TEnt>(DbContext context, IMapper mapper) : IReposito
     }
 
     /// <inheritdoc/>
-    public async Task<Pagination<TEnt>> GetPaging(int page = 0, int size = 15)
+    public async Task<Pagination<TEnt>> GetPaging(int? page = 0, int? size = 15)
     {
-        page = page < 1 ? 0 : page;
-        size = size < 1 ? 0 : size;
+        var pg = page == null || page < 1 ? 0 : page.Value;
+        var sz = size == null || size < 0 ? 15 : size.Value;
         var query = GetQuery();
+        var cnt = sz > 0 ? await query.CountAsync() : 0;
         if (size > 0)
-            query = query.Skip(page * size).Take(size);
+            query = query.Skip(pg * sz).Take(sz);
 
-        var result = new Pagination<TEnt>(page, size, size > 0 ? await query.CountAsync() : 0, await query.ToArrayAsync());
+        var result = new Pagination<TEnt>(pg, sz, cnt, await query.ToArrayAsync());
         return EndQuery(result);
     }
 
     /// <inheritdoc/>
-    public async Task<Pagination<TMap>> GetPaging<TMap>(int page = 0, int size = 15)
+    public async Task<Pagination<TMap>> GetPaging<TMap>(int? page = 0, int? size = 15)
     {
-        page = page < 1 ? 0 : page;
-        size = size < 1 ? 0 : size;
+        var pg = page == null || page < 1 ? 0 : page.Value;
+        var sz = size == null || size < 0 ? 15 : size.Value;
         var query = GetQuery();
+        var cnt = sz > 0 ? await query.CountAsync() : 0;
         if (size > 0)
-            query = query.Skip(page * size).Take(size);
+            query = query.Skip(pg * sz).Take(sz);
 
-        var result = new Pagination<TMap>(page, size, size > 0 ? await query.CountAsync() : 0, await query.ProjectTo<TMap>(_mapper.ConfigurationProvider).ToArrayAsync());
+        var result = new Pagination<TMap>(pg, sz, cnt, await query.ProjectTo<TMap>(_mapper.ConfigurationProvider).ToArrayAsync());
         return EndQuery(result);
     }
     #endregion

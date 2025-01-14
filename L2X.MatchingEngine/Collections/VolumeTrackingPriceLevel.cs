@@ -1,4 +1,6 @@
-﻿namespace L2X.MatchingEngine.Collections;
+﻿using L2X.Services.Models.Matching;
+
+namespace L2X.MatchingEngine.Collections;
 
 public class VolumeTrackingPriceLevel : PriceLevel, IEnumerable<MOrder>, IEnumerable
 {
@@ -38,7 +40,7 @@ public class VolumeTrackingPriceLevel : PriceLevel, IEnumerable<MOrder>, IEnumer
 
         Volume -= volume;
         order.Volume -= volume;
-        return order.IsFilled && base.RemoveOrder(order);
+		return order.IsFilled && base.RemoveOrder(order);
     }
     #endregion
 }

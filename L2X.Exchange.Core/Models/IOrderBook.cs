@@ -8,10 +8,10 @@ public interface IOrderBook
     /// <summary>
     /// All sell orders in OrderBook, sorted by Price descending
     /// </summary>
-    IEnumerable<IBookEntry> Asks { get; }
+    IEnumerable<IOrderBookEntry> Asks { get; }
 
     /// <summary>
     /// All buy orders in OrderBook, sorted by Price ascending
     /// </summary>
-    IEnumerable<IBookEntry> Bids { get; }
+    IEnumerable<IOrderBookEntry> Bids { get; }
 }

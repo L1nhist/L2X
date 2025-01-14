@@ -1,4 +1,6 @@
-﻿namespace L2X.MatchingEngine.Collections;
+﻿using L2X.Services.Models.Matching;
+
+namespace L2X.MatchingEngine.Collections;
 
 internal class OrderSet(IEnumerable<MOrder>? orders = null) : IEnumerable<MOrder>, IEnumerable
 {

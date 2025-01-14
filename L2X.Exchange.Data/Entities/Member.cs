@@ -4,7 +4,7 @@
 [Index("Name", IsUnique = true)]
 [Index("Email", IsUnique = true)]
 [Index("Phone", IsUnique = true)]
-public class Member : Entity<Guid>, IMomentable, IRemovable
+public class Member : Entity, IMomentable, IRemovable
 {
     /// <summary>
     /// Mã uid liên kết với nhóm thành viên tương ứng
@@ -21,27 +21,27 @@ public class Member : Entity<Guid>, IMomentable, IRemovable
     /// </summary>
     [Required]
     [StringLength(50)]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Địa chỉ email của thành viên
     /// </summary>
     [Required]
     [StringLength(250)]
-    public required string Email { get; set; }
+    public string Email { get; set; }
 
     /// <summary>
     /// Số điện thoại liên lạc của thành viên
     /// </summary>
     [StringLength(250)]
-    public required string Phone { get; set; }
+    public string Phone { get; set; }
 
     /// <summary>
     /// Mật khẩu đăng nhập của thành viên
     /// </summary>
     [Required]
     [StringLength(250)]
-    public required string Password { get; set; }
+    public string Password { get; set; }
 
     /// <summary>
     /// Mã xác nhận của thành viên, có thể xảy ra 2 trường hợp:
@@ -153,12 +153,17 @@ public class Member : Entity<Guid>, IMomentable, IRemovable
     /// <summary>
     /// Danh sách lệnh đặt tương ứng
     /// </summary>
-    //public ICollection<Matcher>? MakerMatchers { get; set; }
+    public ICollection<PreOrder>? PreOrders { get; set; }
+
+    /// <summary>
+    /// Danh sách lệnh đặt tương ứng
+    /// </summary>
+    public ICollection<Match>? MakerMatchers { get; set; }
 
     ///// <summary>
     ///// Danh sách lệnh đặt tương ứng
     ///// </summary>
-    //public ICollection<Matcher>? TakerMatchers { get; set; }
+    public ICollection<Match>? TakerMatchers { get; set; }
 
     ///// <summary>
     ///// 

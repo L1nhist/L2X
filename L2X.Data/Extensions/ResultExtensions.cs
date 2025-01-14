@@ -17,6 +17,15 @@ public static class Result
     public static PagedResult<T> NewPage<T>()
         => new();
 
+    public static IResult Error(Exception ex)
+        => new BaseResult().Error(ex);
+
+    public static IResult<T> Error<T>(Exception ex)
+        => new BaseResult<T>().Error(ex);
+
+    public static PagedResult<T> PagedError<T>(Exception ex)
+        => new PagedResult<T>().Error(ex);
+
     //public static IResult Ok(string message = "")
     //    => new BaseResult().Ok(message);
 

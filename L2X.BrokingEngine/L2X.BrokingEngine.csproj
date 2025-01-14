@@ -8,15 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\L2X.Core\L2X.Core.csproj" />
     <ProjectReference Include="..\L2X.Data\L2X.Data.csproj" />
     <ProjectReference Include="..\L2X.Exchange.Core\L2X.Exchange.Core.csproj" />
-    <ProjectReference Include="..\L2X.MessageQueue\L2X.MessageQueue.csproj" />
+    <ProjectReference Include="..\L2X.Exchange.Data\L2X.Exchange.Data.csproj" />
+    <ProjectReference Include="..\L2X.Services\L2X.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="AutoMapper" />
+    <Using Include="L2X.Core.Utilities" />
+    <Using Include="L2X.Data.Repositories" />
+    <Using Include="L2X.Exchange.Data" />
+    <Using Include="L2X.Exchange.Data.Entities" />
+    <Using Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
 
 </Project>

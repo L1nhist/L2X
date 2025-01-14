@@ -1,4 +1,6 @@
-﻿namespace L2X.Data.Repositories;
+﻿using L2X.Data.Extensions;
+
+namespace L2X.Data.Repositories;
 
 /// <summary>
 /// Repository cung cấp các phương thức xử lý dữ liệu chung cho các Bảng trong Database
@@ -92,25 +94,32 @@ public interface IRepository<TEnt> : IDisposable
     /// <param name="ent">Danh sách các giá trị Entity cần cập nhật</param>
     Task<int> Update(IEnumerable<TEnt> ents);
 
+	/// <summary>
+	/// Cập nhật Entity chỉ thay đổi một trường dữ liệu vào Database
+	/// </summary>
+	/// <param name="ent">Giá trị Entity cần thay đổi</param>
+	/// <param name="expression">Trường dữ liệu được chỉ ra trong công thức</param>
+	Task<int> UpdateBy(Action<SetPropertyBuilder<TEnt>> builder);
+
     /// <summary>
     /// Cập nhật một danh sách các Entity chỉ thay đổi các trường được liệt kê vào Database
     /// </summary>
     /// <param name="ent">Danh sách các giá trị Entity cần thay đổi</param>
     /// <param name="fields">Danh sách các trường dữ liệu cần thay đổi, được viết cách nhau bởi dấu phảy (,) và không phân biệt chữ hoa chữ thường</param>
-    Task<int> UpdateBy(string field, object value);
+    Task<int> UpdateBy(string? field, object? value);
 
     /// <summary>
     /// Cập nhật Entity chỉ thay đổi một trường dữ liệu vào Database
     /// </summary>
     /// <param name="ent">Giá trị Entity cần thay đổi</param>
     /// <param name="expression">Trường dữ liệu được chỉ ra trong công thức</param>
-    Task<int> UpdateBy<TFld>(Expression<Func<TEnt, TFld>> expression, TFld value);
+    Task<int> UpdateBy<TFld>(Expression<Func<TEnt, TFld?>> expression, TFld? value);
 
-    /// <summary>
-    /// Xóa một Entity khỏi Database
-    /// </summary>
-    /// <param name="ent">Giá trị Entity cần xóa</param>
-    Task<int> Delete(bool firstOnly = false);
+	/// <summary>
+	/// Xóa một Entity khỏi Database
+	/// </summary>
+	/// <param name="ent">Giá trị Entity cần xóa</param>
+	Task<int> Delete(int top = 0);
 
     /// <summary>
     /// Xóa một Entity khỏi Database
@@ -165,11 +174,11 @@ public interface IRepository<TEnt> : IDisposable
     /// Lấy danh sách phân trang các Entity theo một câu lệnh tìm kiếm có điều kiện từ Database
     /// </summary>
     /// <returns>Danh sách phân trang các Entity tìm được, <seealso cref="Pagination{TEnt}"/></returns>
-    Task<Pagination<TEnt>> GetPaging(int page = 0, int size = 15);
+    Task<Pagination<TEnt>> GetPaging(int? page = 0, int? size = 15);
 
     /// <summary>
     /// Lấy danh sách phân trang các Entity theo một câu lệnh tìm kiếm có điều kiện từ Database
     /// </summary>
     /// <returns>Danh sách phân trang các Entity tìm được, <seealso cref="Pagination{TEnt}"/></returns>
-    Task<Pagination<TMap>> GetPaging<TMap>(int page = 0, int size = 15);
+    Task<Pagination<TMap>> GetPaging<TMap>(int? page = 0, int? size = 15);
 }

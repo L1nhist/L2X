@@ -88,23 +88,29 @@ public readonly struct Epoch : IComparable, IComparable<long>, IEquatable<long>,
     public Epoch() : this(DateTime.UtcNow)
     { }
 
-    public Epoch(DateTime date)
+    public Epoch(DateTime? date)
     {
-        _date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second);
-        _value = (long)date.ToUniversalTime().Subtract(_zero).TotalMilliseconds;
+        if (date != null)
+        {
+            _date = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, date.Value.Hour, date.Value.Minute, date.Value.Second);
+            _value = (long)date.Value.ToUniversalTime().Subtract(_zero).TotalMilliseconds;
+        }
     }
 
-    public Epoch(long value)
+    public Epoch(long? value)
     {
-        _date = _zero.AddSeconds(value).ToLocalTime();
-        _value = value;
+        if (value != null)
+        {
+            _date = _zero.AddMilliseconds(value.Value).ToLocalTime();
+            _value = value.Value;
+        }
     }
 
     public Epoch(string? value)
     {
         if (long.TryParse(value, out long stamp))
         {
-            _date = _zero.AddSeconds(stamp).ToLocalTime();
+            _date = _zero.AddMilliseconds(stamp).ToLocalTime();
             _value = stamp;
         }
         else

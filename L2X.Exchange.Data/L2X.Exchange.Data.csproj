@@ -12,11 +12,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\L2X.Data\L2X.Data.csproj" />
+    <ProjectReference Include="..\L2X.Exchange.Core\L2X.Exchange.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="L2X.Core.Models" />
+    <Using Include="L2X.Core.Structures" />
     <Using Include="L2X.Data.Entities" />
+    <Using Include="L2X.Data.Requests" />
+    <Using Include="L2X.Data.Responses" />
+    <Using Include="L2X.Exchange.Data.Requests" />
+    <Using Include="L2X.Exchange.Data.Responses" />
     <Using Include="Microsoft.EntityFrameworkCore" />
     <Using Include="System.ComponentModel.DataAnnotations" />
     <Using Include="System.ComponentModel.DataAnnotations.Schema" />
